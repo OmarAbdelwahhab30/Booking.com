@@ -12,14 +12,14 @@ class RegisterService
 
     public function register($request):User
     {
-        return $this->CreateToken(
+        $user =  $this->CreateToken(
             User::create([
-                'name'          => $request->name,
-                'email'         => $request->email,
-                'password'      => Hash::make($request->password),
-                'role_id'       => $request->role_id
-            ])
-        );
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]));
+        $user->assignRole($request->role_id);
+        return $user;
     }
 
 
